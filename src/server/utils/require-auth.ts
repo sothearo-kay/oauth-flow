@@ -11,7 +11,7 @@ export async function requireAuth(event: H3Event) {
   }
 
   try {
-    const session = JSON.parse(sessionCookie);
+    const session: { accessToken: string } = JSON.parse(sessionCookie);
     return session;
   } catch {
     throw createError({

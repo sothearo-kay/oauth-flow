@@ -2,6 +2,8 @@ import type { User } from "~/types/user";
 
 export const useAuthStore = defineStore("auth", () => {
   const userCookie = useCookie<User>("user-profile");
+  const { $toast } = useNuxtApp();
+
   const user = ref<User | null>(userCookie.value);
   const isLoading = ref(false);
   const isAuthenticated = computed(() => !!user.value);
@@ -16,6 +18,7 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function login() {
+    $toast.info("Redirecting to GitHub...");
     window.location.href = "/auth/github";
   }
 
@@ -26,9 +29,11 @@ export const useAuthStore = defineStore("auth", () => {
         method: "POST",
       });
       user.value = null;
+      $toast.success("Logged out successfully");
       await navigateTo("/login");
     } catch (error) {
       console.error("Logout failed:", error);
+      $toast.error("Logout failed. Please try again.");
     } finally {
       isLoading.value = false;
     }

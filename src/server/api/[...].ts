@@ -5,5 +5,13 @@ export default defineEventHandler(async (event) => {
   const path = event.path.replace(/^\/api\//, "");
   const target = joinURL(proxyUrl, path);
 
-  return proxyRequest(event, target);
+  try {
+    const { accessToken } = await requireAuth(event);
+    return proxyRequest(event, target, {
+      headers: { authorization: `Bearer ${accessToken}` },
+    });
+  } catch {
+    // No auth - proxy without auth header
+    return proxyRequest(event, target);
+  }
 });
