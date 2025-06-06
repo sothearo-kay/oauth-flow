@@ -9,6 +9,10 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    githubClientId: "",
+    githubClientSecret: "",
+    githubCallbackUrl: "",
+    sessionSecret: "",
     public: {
       apiUrl: "",
     },
