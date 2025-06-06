@@ -1,0 +1,11 @@
+.p-button {
+  @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 transition-colors;
+}
+
+.p-button-outlined {
+  @apply border hover:bg-slate-100;
+}
+
+.p-button-rounded {
+  @apply h-10 rounded-full;
+}
